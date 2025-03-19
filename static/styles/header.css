@@ -3,7 +3,7 @@
 }
 
 .logo {
-  width: 45px;
+  width: 65px;
 }
 
 header li {
@@ -90,8 +90,7 @@ body {
 }
 
 .footer__logo {
-  font-family: "Pacifico", cursive;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 1.5rem;
   text-align: left;
 }
