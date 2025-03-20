@@ -1,0 +1,85 @@
+<style>
+    .body{
+        margin: auto;
+    }
+    .input_field {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .input_submit {
+      width: 100%;
+      background-color: #4CAF50;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .input_submit:hover {
+      background-color: #45a049;
+    }
+
+    .sub_header {
+        margin-top: 10%;
+        display: flex;
+        justify-content: center; /* Center horizontally */
+        align-items: center; /* Center vertically */
+    }
+
+    .search_result {
+        display: flex;
+        height: 200px;
+        background-color: white;
+        margin-bottom: 22px;
+        padding: auto;
+    }
+
+    .boat_list_style {
+        list-style: none;
+        padding: 0;
+        margin: auto;
+        text-align: center;
+    }
+
+    .search_result p {
+        margin: auto;
+        text-align: center;
+    }
+</style>
+
+{% extends "base.html" %}
+{% block body %}
+    <div class="body">
+        <div class="sub_header">
+            <h2>Enter a Boat's ID to search it in the Database</h2>
+        </div>
+        <form action="/boat-search" method="POST">
+            <input type="number" name="id" placeholder="Boat ID" class="input_field"> <br>
+            <input type="submit" value="Search" class="input_submit">
+        </form>
+        <div class="search_result">
+            {% if boats == [] %}
+                <p><b>The Boat ID entered does not exist in the database.</b></p>
+            {% else %}
+                {% for boat in boats %}
+                <ul class="boat_list_style">
+                    <li><b>Boat ID</b> : {{boat[0]}}</li>
+                    <li><b>Boat Name</b> : {{boat[1]}}</li>
+                    <li><b>Boat Type</b> : {{boat[2]}}</li>
+                    <li><b>Boat Owner ID</b> : {{boat[3]}}</li>
+                    <li><b>Boat Rental Price</b> : {{boat[4]}}</li>
+                </ul>
+                {% endfor %}  
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
