@@ -11,10 +11,11 @@
         <div class="">
           <img src="../static/images/boat-logo.png" alt="Logo" class="logo" />
           <ul class="barItem">
-            <li><a>HOME</a></li>
-            <li>SERVICES</li>
-            <li>ABOUT</li>
-            <li>CONTACT</li>
+            <li><a href="{{ url_for('boats') }}">View Boats</a></li>
+            <li><a href="{{ url_for('get_boat') }}">Create Boat</a></li>
+            <li><a href="{{ url_for('get_boat_search') }}">Search Boat</a></li>
+            <li><a href="{{ url_for('get_boat_delete') }}">Delete Boat</a></li>
+
           </ul>
         </div>
 

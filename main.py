@@ -36,7 +36,29 @@ def find_boat_search():
         return render_template('boat_search.html', boats=boats, error=None, sucess='Sucess')
     except:
         return render_template('boat_search.html', boats=boats, error='Falied', sucess=None)
+    
+@app.route('/boat-delete', methods=['GET'])
+def get_boat_delete():
+    return render_template('boat_delete.html')
 
+@app.route('/boat-delete', methods=['POST'])
+def delete_boat():
+    boat_id = request.form.get("id") 
+
+    try: 
+        with engine.connect() as conn:
+            result = conn.execute(text("DELETE FROM boats WHERE id = :id"), {"id": boat_id})
+            conn.commit()  
+
+        if result.rowcount > 0:
+            return render_template("boat_delete.html", result=f"Boat ID {boat_id} successfully deleted.")
+        else:
+            return render_template("boat_delete.html", error=f"Boat ID {boat_id} not found.")
+    except:
+        if result.rowcount > 0:
+            return render_template("boat_delete.html", result=f"Boat ID {boat_id} successfully deleted.")
+        else:
+            return render_template("boat_delete.html", error=f"Boat ID {boat_id} not found.")
 
 # Should always be last 2 lines of code
 if __name__ == '__main__': # Checks to make sure the file that the code is ran on is the Flask main
