@@ -60,6 +60,38 @@ def delete_boat():
         else:
             return render_template("boat_delete.html", error=f"Boat ID {boat_id} not found.")
 
+@app.route('/boat-update', methods=['GET'])
+def get_boat_update():
+    return render_template('boat_update.html')
+
+@app.route('/boat-update', methods=['POST'])
+def update_boat():
+    boat_id = request.form.get("id")
+    name = request.form.get("name")
+    type_ = request.form.get("type")  
+    owner_id = request.form.get("owner_id")
+    rental_price = request.form.get("rental_price")
+
+    try:
+        with engine.connect() as conn:
+            result = conn.execute(
+                text("""
+                    UPDATE boats 
+                    SET name = :name, type = :type, owner_id = :owner_id, rental_price = :rental_price 
+                    WHERE id = :id
+                """),
+                {"id": boat_id, "name": name, "type": type_, "owner_id": owner_id, "rental_price": rental_price}
+            )
+            conn.commit()
+
+        if result.rowcount > 0:
+            return render_template("boat_update.html", result=f"Boat ID {boat_id} successfully updated.")
+        else:
+            return render_template("boat_update.html", error=f"Boat ID {boat_id} not found.")
+    except Exception as e:
+        return render_template("boat_update.html", error=f"Failed to update boat: {str(e)}")
+
+
 # Should always be last 2 lines of code
 if __name__ == '__main__': # Checks to make sure the file that the code is ran on is the Flask main
     app.run(debug=True) # Runs the application and debug gives live updates when you change your code
